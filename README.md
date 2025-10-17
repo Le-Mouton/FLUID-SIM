@@ -61,6 +61,26 @@ The visualization will show:
 
 Close the window to exit the simulation.
 
+### Examples
+
+For more usage examples, see `examples.py` which demonstrates:
+- Basic usage and simulation setup
+- Customizing physics parameters
+- Creating custom particle arrangements
+- Querying particle information
+
+Run examples with:
+```bash
+python examples.py
+```
+
+### Testing
+
+Run the test suite to verify the simulation:
+```bash
+python test_simulation.py
+```
+
 ## Code Structure
 
 - `particle.py`: Particle class with position, velocity, and physical properties
