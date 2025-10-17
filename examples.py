@@ -101,7 +101,7 @@ def example_query_particle_info():
     
     # Add particles
     for i in range(5):
-        sim.add_particle([2.0 + i * 0.3, 5.0], [0.0, 0.0])
+        sim.add_particle([2.0 + i * 0.3, 5.0], [0.0, 0.0], mass=1.0)
     
     # Run simulation
     for _ in range(50):
