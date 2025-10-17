@@ -10,7 +10,6 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 void processInput(GLFWwindow *window);
 
 // settings
@@ -39,8 +38,6 @@ bool speedKeyPressedLast = false;
 float deltaTime = 0.0f; // time between current frame and last frame
 float lastFrame = 0.0f;
 
-extern Grille* g_grid;
-
 int main() {
     if (!glfwInit()) {
         std::cerr << "GLFW init failed\n";
@@ -67,7 +64,6 @@ int main() {
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -86,7 +82,6 @@ int main() {
 
 
     Grille grid = CreateGrid(10, 50, 10, 0.8f);
-    g_grid = &grid;
     std::cout << "Nombre de vertices: " << grid.vertices.size() << std::endl;
 
     float vertices2[] = {
@@ -299,52 +294,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     if (fov > 45.0f)
         fov = 45.0f;
 }
-
-Grille* g_grid = nullptr;
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-    if (!g_grid) return;
-
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
-        std::cout << "clicked" << std::endl;
-        double mouseX, mouseY;
-        glfwGetCursorPos(window, &mouseX, &mouseY);
-
-        float clickX = static_cast<float>(mouseX);
-        float clickY = static_cast<float>(mouseY);
-
-        float influenceRadius = 100.0f;
-        float force = 10.0f;
-
-        int nx = g_grid->nx;
-        int ny = g_grid->ny;
-        int nz = g_grid->nz;
-
-        for (int i = 0; i < nx; ++i) {
-            for (int j = 0; j < ny; ++j) {
-                for (int k = 0; k < nz; ++k) {
-                    Vertex& v = g_grid->vertices[idx3(i,j,k,ny,nz)];
-                    float dx = v.x - clickX;
-                    float dy = v.y - clickY;
-                    float dist2 = dx*dx + dy*dy;
-
-                    if (dist2 < influenceRadius * influenceRadius) {
-                        float dist = sqrt(dist2);
-                        if (dist > 0.0f) {
-                            float nx_ = dx / dist;
-                            float ny_ = dy / dist;
-
-                            g_grid->vx[i][j][k] += nx_ * force;
-                            g_grid->vy[i][j][k] += ny_ * force;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 
 
 

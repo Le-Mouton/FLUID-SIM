@@ -1,0 +1,1 @@
+/usr/bin/c++ -g -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/myapp.dir/src/main.cpp.o CMakeFiles/myapp.dir/src/grid.cpp.o CMakeFiles/myapp.dir/src/glad.c.o -o myapp  -Wl,-rpath,/opt/homebrew/lib /opt/homebrew/lib/libglfw.3.4.dylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo /opt/homebrew/opt/libomp/lib/libomp.dylib
