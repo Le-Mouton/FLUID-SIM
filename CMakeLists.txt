@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(MyApp C CXX)   # <<< ajouter C ici
+project(FluidSim C CXX)
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(glfw3 3.3 REQUIRED)
 
-add_executable(myapp
+add_executable(fluid-sim
   src/main.cpp
   src/grid.cpp
   src/glad.c
 )
 
-target_include_directories(myapp PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(fluid-sim PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
-target_link_libraries(myapp PRIVATE
+target_link_libraries(fluid-sim PRIVATE
   glfw
   "-framework OpenGL"
   "-framework Cocoa"
